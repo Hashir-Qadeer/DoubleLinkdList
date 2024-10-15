@@ -23,7 +23,41 @@ public:
 		while (head)
 			removeAtHead();
 	}
-
+	void insertAtHead(T val)
+{
+	DNode<T>* p = new DNode<T>(val);
+	if (head == nullptr)
+	{
+		head = p;
+		head->next = head->prev = head;
+		return;
+	}
+	p->next = head;
+	p->prev = head->prev;
+	head->prev->next = p;
+	head->prev = p;
+	head = p;
+}
+	void remove(T key)
+	{
+		if (head == nullptr)
+			return;
+		if (head->info == key)
+		{
+			removeAtHead();
+			return;
+		}
+		DNode<T>* p = head->next;
+		while (p != head && p->info != key)
+		{
+			p = p->next;
+		}
+		if (p == head)
+			return;
+		p->prev->next = p->next;
+		p->next->prev = p->prev;
+		delete p;
+	}
 	void insertAtTail(T val)
 	{
 		DNode<T>* p = new DNode<T>(val);
